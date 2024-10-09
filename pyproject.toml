@@ -1,0 +1,32 @@
+[project]
+name = "caption-project"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "alexwine36", email = "alexwine36@gmail.com" }
+]
+dependencies = [
+    "pillow>=10.4.0",
+    "pyheif>=0.8.0",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["maturin>=1.2,<2.0"]
+build-backend = "maturin"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest>=8.3.3",
+    "maturin>=1.7.4",
+]
+
+[tool.maturin]
+python-source = "python"
+module-name = "caption_project._lowlevel"
+features = ["pyo3/extension-module"]
+
+[tool.pytest.ini_options]
+addopts = "-s"
