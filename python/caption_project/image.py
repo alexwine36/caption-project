@@ -55,14 +55,14 @@ class BaseImage:
     def get_temp_file(self, extension: str = ".jpg"):
         file_path = NamedTemporaryFile(suffix=extension)
         image = self.get_image()
-        
+
         image.save(file_path.name)
 
-
         return file_path
+
     def get_image_name(self):
         return self.image_path.stem
-        
+
     def get_image_id(self):
         name = self.get_image_name()
         return name.split("_")[1]
@@ -74,4 +74,3 @@ class BaseImage:
             return self.convert_heic_to_jpg()
         else:
             raise ValueError("Invalid image format")
-
