@@ -1,7 +1,6 @@
-from pathlib import Path
+from .utils import base_path
 
 
-base_path = Path(__file__).parent.parent / ".." / "test_images"
 
 test_cases = [("4275"), ("5778"), ("5790"), ("5865"), ("5912"), ("7357"), ("7366")]
 
