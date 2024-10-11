@@ -1,3 +1,10 @@
+## 0.1.5 (2024-10-11)
+
+### Fix
+
+- **ci**: added missing targets
+- **init**: update import file
+
 ## 0.1.4 (2024-10-11)
 
 ### Fix
