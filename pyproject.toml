@@ -21,6 +21,7 @@ managed = true
 dev-dependencies = [
     "pytest>=8.3.3",
     "maturin>=1.7.4",
+    "commitizen>=3.29.1",
 ]
 
 [tool.maturin]
@@ -30,3 +31,13 @@ features = ["pyo3/extension-module"]
 
 [tool.pytest.ini_options]
 addopts = "-s"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "pep621"
+update_changelog_on_bump = true
+
+[tool.rye.scripts]
+commit = "rye run cz commit"
