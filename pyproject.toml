@@ -1,6 +1,6 @@
 [project]
 name = "caption-project"
-version = "0.1.1"
+version = "0.1.2"
 description = "Add your description here"
 authors = [
     { name = "alexwine36", email = "alexwine36@gmail.com" }

@@ -1,3 +1,9 @@
+## 0.1.2 (2024-10-11)
+
+### Fix
+
+- **ci**: update deployment process
+
 ## 0.1.1 (2024-10-11)
 
 ### Fix
