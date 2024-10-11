@@ -7,45 +7,47 @@ name: CI
 
 on:
   push:
-    tags:
-      - "*"
-
+    branches:
+      - main
+    # tags:
+    #   - "*"
+  # pull_request:
+  # workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
+permissions: write-all
 
 jobs:
-  # bump_version:
-  #   runs-on: ubuntu-latest
-  #   name: "Bump version and create changelog with commitizen"
-  #   steps:
-  #     - name: Check out
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-  #         token: "${{ secrets.GITHUB_TOKEN }}"
-  #     - id: cz
-  #       name: Create bump and changelog
-  #       uses: commitizen-tools/commitizen-action@master
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         changelog_increment_filename: body.md
-  #     - name: Release
-  #       uses: softprops/action-gh-release@v1
-  #       with:
-  #           body_path: "body.md"
-  #           tag_name: ${{ env.REVISION }}
-  #       env:
-  #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #     - name: Print Version
-  #       run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
+  bump_version:
+    runs-on: ubuntu-latest
+    name: "Bump version and create changelog with commitizen"
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: "${{ secrets.GITHUB_TOKEN }}"
+      - id: cz
+        name: Create bump and changelog
+        uses: commitizen-tools/commitizen-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          changelog_increment_filename: body.md
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+            body_path: "body.md"
+            tag_name: ${{ env.REVISION }}
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print Version
+        run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
 
   # linux:
-  #   
+  #   needs: [bump_version]
   #   runs-on: ${{ matrix.platform.runner }}
   #   strategy:
   #     matrix:
@@ -81,7 +83,7 @@ jobs:
   #         path: dist
 
   # musllinux:
-  #   
+  #   needs: [bump_version]
   #   runs-on: ${{ matrix.platform.runner }}
   #   strategy:
   #     matrix:
@@ -113,7 +115,7 @@ jobs:
   #         path: dist
 
   # windows:
-  #   
+  #   needs: [bump_version]
   #   runs-on: ${{ matrix.platform.runner }}
   #   strategy:
   #     matrix:
@@ -141,7 +143,7 @@ jobs:
   #         path: dist
 
   macos:
-    
+    needs: [bump_version]
     runs-on: ${{ matrix.platform.runner }}
     strategy:
       matrix:
@@ -152,6 +154,8 @@ jobs:
             target: aarch64
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
@@ -168,10 +172,12 @@ jobs:
           path: dist
 
   sdist:
-    
+    needs: [bump_version]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: ./.github/actions/ci-setup
       - name: Build sdist
         run: rye run maturin sdist --out dist
@@ -184,7 +190,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' }}
+    # if: ${{ startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' }}
     needs: [macos, sdist]
     permissions:
       # Use to sign the release artifacts
@@ -200,7 +206,7 @@ jobs:
         with:
           subject-path: "wheels-*/*"
       - name: Publish to PyPI
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        # if: ${{ startsWith(github.ref, 'refs/tags/') }}
         uses: PyO3/maturin-action@v1
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
