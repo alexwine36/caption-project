@@ -1,3 +1,10 @@
+## 0.1.10 (2024-10-11)
+
+### Fix
+
+- update needs
+- add before-script-linux
+
 ## 0.1.9 (2024-10-11)
 
 ### Fix
