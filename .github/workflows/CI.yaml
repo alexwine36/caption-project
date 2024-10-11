@@ -76,7 +76,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           before-script-linux: |
-            sudo apt-get install pkgconf-bin libssl-dev -y
+            apt-get install pkgconf-bin libssl-dev -y
           target: ${{ matrix.platform.target }}
           args: --release --out dist --find-interpreter
           sccache: "true"
