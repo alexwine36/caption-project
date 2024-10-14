@@ -22,7 +22,7 @@ runs:
     - name: Build wheels 
       shell: bash
       run: |
-        maturin build --release --out dist --find-interpreter --target 
+        maturin build --release --out dist --find-interpreter --target ${{ inputs.target}}
         
         
         
