@@ -4,8 +4,6 @@ extern crate intel_mkl_src;
 #[cfg(feature = "accelerate")]
 extern crate accelerate_src;
 
-use std::fs;
-use std::io::Read;
 
 use anyhow::Error as E;
 
