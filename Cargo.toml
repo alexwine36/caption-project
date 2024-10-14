@@ -20,6 +20,7 @@ hf-hub = "0.3.0"
 anyhow = { version = "1", features = ["backtrace"] }
 accelerate-src = { version = "0.3.2", optional = true}
 intel-mkl-src = { version = "0.8.1", features = ["mkl-static-lp64-iomp"], optional = true}
+openssl = { version = "0.10", features = ["vendored"] }
 
 
 [features]
