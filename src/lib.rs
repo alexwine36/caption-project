@@ -28,13 +28,14 @@ fn probe_ssl_certs() {
 #[cfg(not(feature = "openssl-vendored"))]
 fn probe_ssl_certs() {}
 
-#[pyfunction]
-pub fn main() {
-    probe_ssl_certs();
-}
+// #[pyfunction]
+// pub fn main() {
+//     probe_ssl_certs();
+// }
 
 #[pyfunction]
 fn caption_image(image_path: &str) -> PyResult<String> {
+    probe_ssl_certs();
     let res = caption::read_file(image_path);//.map_err(Err(PyValueError::new_err("")))
     match res {
         Ok(contents) => Ok(contents),
