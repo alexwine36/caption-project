@@ -41,3 +41,4 @@ update_changelog_on_bump = true
 
 [tool.rye.scripts]
 commit = "rye run cz commit"
+rust-lint = "cargo clippy"
