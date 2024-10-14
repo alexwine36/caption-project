@@ -76,7 +76,7 @@ jobs:
         shell: bash
         id: is-openssl-vendored
         run: |
-          if [[ "${{ startsWith(matrix.target, 'x86') }}" == "true" ]]; then
+          if [[ "${{ startsWith(matrix.platform.target, 'x86') }}" == "true" ]]; then
             echo "enabled=" >> $GITHUB_OUTPUT
           else
             echo "enabled=--features openssl-vendored" >> $GITHUB_OUTPUT
@@ -85,11 +85,11 @@ jobs:
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
-          target: ${{ matrix.target }}
+          target: ${{ matrix.platform.target }}
           args: --release --out dist --find-interpreter ${{ steps.is-openssl-vendored.outputs.enabled }}
           manylinux: auto
           before-script-linux: |
-            case "${{ matrix.target }}" in
+            case "${{ matrix.platform.target }}" in
               "aarch64" | "armv7" | "s390x" | "ppc64le")
                 # NOTE: pypa/manylinux docker images are Debian based
                 apt-get update
