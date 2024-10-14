@@ -9,11 +9,11 @@ install_openssl() {
         if [ -f /etc/lsb-release ] && grep -q "Ubuntu" /etc/lsb-release; then
             # Ubuntu
             sudo apt-get update
-            sudo apt-get install -y openssl libssl-dev
+            sudo apt-get install -y pkg-config libssl-dev
         else
             # Debian
             sudo apt-get update
-            sudo apt-get install -y openssl libssl-dev
+            sudo apt-get install -y pkg-config libssl-dev
         fi
     elif [ -f /etc/fedora-release ]; then
         # Fedora
