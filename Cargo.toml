@@ -27,4 +27,4 @@ openssl-probe = { version = "0.1", optional = true }
 default = []
 accelerate = ["dep:accelerate-src", "candle/accelerate", "candle-nn/accelerate", "candle-transformers/accelerate"]
 mkl = ["dep:intel-mkl-src", "candle/mkl", "candle-nn/mkl", "candle-transformers/mkl"]
-openssl-vendored = []
+openssl-vendored = ["dep:openssl", "dep:openssl-probe"]
