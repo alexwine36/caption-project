@@ -6,9 +6,15 @@ install_openssl() {
         # Arch Linux
         pacman -Sy --noconfirm openssl
     elif [ -f /etc/debian_version ]; then
-        # Debian/Ubuntu
-        apt-get update
-        apt-get install -y openssl
+        if [ -f /etc/lsb-release ] && grep -q "Ubuntu" /etc/lsb-release; then
+            # Ubuntu
+            apt-get update
+            apt-get install -y openssl
+        else
+            # Debian
+            apt-get update
+            apt-get install -y openssl
+        fi
     elif [ -f /etc/fedora-release ]; then
         # Fedora
         dnf install -y openssl
