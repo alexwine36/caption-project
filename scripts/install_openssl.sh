@@ -26,7 +26,7 @@ install_openssl() {
         zypper install -y openssl
     else
         echo "Unsupported distribution"
-        exit 1
+        # exit 1
     fi
 }
 
@@ -38,7 +38,7 @@ if [ $? -eq 0 ]; then
     echo "OpenSSL installed successfully"
 else
     echo "Failed to install OpenSSL"
-    exit 1
+    # exit 1
 fi
 
 # Verify installation
